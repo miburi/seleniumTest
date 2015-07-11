@@ -16,6 +16,7 @@ public class Example  {
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
         java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
         //TEST
+        //GIT TEST CHANGE HERE
         WebDriver driver = new HtmlUnitDriver();
 
         // And now use this to visit Google
