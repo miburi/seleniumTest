@@ -13,11 +13,12 @@ public class Example  {
         // not the implementation.
         System.out.println("testing");
 
+
+        WebDriver driver = new HtmlUnitDriver();
+
+        //git add from PC
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
         java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
-        //TEST
-        //GIT TEST CHANGE HERE
-        WebDriver driver = new HtmlUnitDriver();
 
         // And now use this to visit Google
         driver.get("http://www.google.com");
