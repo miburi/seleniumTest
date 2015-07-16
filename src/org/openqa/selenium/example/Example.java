@@ -13,13 +13,18 @@ public class Example  {
         // Create a new instance of the html unit driver
         // Notice that the remainder of the code relies on the interface,
         // not the implementation.
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\miburi\\IdeaProjects\\chromedriver.exe");
+        // WHEN RUNNING FROM WINDOWS
+        //System.setProperty("webdriver.chrome.driver", "C:\\Users\\miburi\\IdeaProjects\\chromedriver.exe");
+        // WHEN RUNNING FROM MAC
+
+        System.setProperty("webdriver.chrome.driver", "/Users/devadmin/IdeaProjects/seleniumTest/chromedriver");
+
         System.out.println("testing");
+        //testing only chromedriver
         WebDriver driverC = new ChromeDriver();
         //WebDriver driverF = new FirefoxDriver();
-        WebDriver driver = new HtmlUnitDriver();
+        //WebDriver driver = new HtmlUnitDriver();
 
-        //git add from PC
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
         java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
 
@@ -35,7 +40,6 @@ public class Example  {
             searchbox.sendKeys("Orlando, Florida");
             WebElement clickBox = driverC.findElement(By.xpath("//button[@type='submit']"));
             clickBox.click();
-            String is_active="listing-type selected";
             System.out.println("DEBUG 1");
             long end = System.currentTimeMillis() + 5000;
             WebElement listingsMenu;
@@ -52,46 +56,7 @@ public class Example  {
 
             System.out.println("DEBUG 2");
 
-            WebElement fsVar = driverC.findElement(By.xpath(".//*[@id='fs-listings']"));
-            WebElement pmVar = driverC.findElement(By.xpath(".//*[@id='pm-listings']"));
-            WebElement frVar = driverC.findElement(By.xpath(".//*[@id='fr-listings']"));
-            WebElement rsVar = driverC.findElement(By.xpath(".//*[@id='rs-listings']"));
-
-            System.out.println(rsVar.getAttribute("class"));
-            if ( fsVar.getAttribute("class").equals(is_active) ){
-                System.out.println("FSVAR IS ACTIVE");
-            }
-            else{
-                driverC.findElement(By.xpath("//div/label[@for='fs-listings-input']")).click();
-                System.out.println("FSVAR IS NOT ACTIVE, TURN ON");
-            }
-
-            if ( pmVar.getAttribute("class").equals(is_active) ){
-                System.out.println("PMVAR IS ACTIVE");
-            }
-            else{
-                driverC.findElement(By.xpath("//div/label[@for='pm-listings-input']")).click();
-                System.out.println("PMVAR IS NOT ACTIVE, TURN ON");
-            }
-
-            if ( frVar.getAttribute("class").equals(is_active) ){
-                System.out.println("FRVAR IS ACTIVE");
-            }
-            else{
-                driverC.findElement(By.xpath("//div/label[@for='fr-listings-input']")).click();
-                System.out.println("FRVAR IS NOT ACTIVE, TURN ON");
-            }
-
-            if ( rsVar.getAttribute("class").equals(is_active) ){
-                System.out.println("RSVAR IS ACTIVE");
-            }
-            else{
-                System.out.println("RSVAR IS NOT ACTIVE, TURN ON");
-                WebElement rsButton = driverC.findElement(By.xpath("//div/label[@for='rs-listings-input']"));
-                System.out.println("GET TEXT=" + rsButton.getText());
-                System.out.println(rsButton.toString());
-                rsButton.click();
-            }
+            homeTypesReset(driverC);
 
             Thread.sleep(5000);
         }catch(InterruptedException e)
@@ -99,6 +64,53 @@ public class Example  {
             System.out.println("Exception" + e);
         }
         driverC.quit();
-        driver.quit();
+        //driver.quit();
     }
+
+    //Passes the webdriver and resets all the home types
+    public static void homeTypesReset(WebDriver driver){
+        String is_active="listing-type selected";
+
+        WebElement fsVar = driver.findElement(By.xpath(".//*[@id='fs-listings']"));
+        WebElement pmVar = driver.findElement(By.xpath(".//*[@id='pm-listings']"));
+        WebElement frVar = driver.findElement(By.xpath(".//*[@id='fr-listings']"));
+        WebElement rsVar = driver.findElement(By.xpath(".//*[@id='rs-listings']"));
+
+        System.out.println(rsVar.getAttribute("class"));
+        if ( fsVar.getAttribute("class").equals(is_active) ){
+            System.out.println("FSVAR IS ACTIVE");
+        }
+        else{
+            driver.findElement(By.xpath("//div/label[@for='fs-listings-input']")).click();
+            System.out.println("FSVAR IS NOT ACTIVE, TURN ON");
+        }
+
+        if ( pmVar.getAttribute("class").equals(is_active) ){
+            System.out.println("PMVAR IS ACTIVE");
+        }
+        else{
+            driver.findElement(By.xpath("//div/label[@for='pm-listings-input']")).click();
+            System.out.println("PMVAR IS NOT ACTIVE, TURN ON");
+        }
+
+        if ( frVar.getAttribute("class").equals(is_active) ){
+            System.out.println("FRVAR IS ACTIVE");
+        }
+        else{
+            driver.findElement(By.xpath("//div/label[@for='fr-listings-input']")).click();
+            System.out.println("FRVAR IS NOT ACTIVE, TURN ON");
+        }
+
+        if ( rsVar.getAttribute("class").equals(is_active) ){
+            System.out.println("RSVAR IS ACTIVE");
+        }
+        else{
+            System.out.println("RSVAR IS NOT ACTIVE, TURN ON");
+            WebElement rsButton = driver.findElement(By.xpath("//div/label[@for='rs-listings-input']"));
+            System.out.println("GET TEXT=" + rsButton.getText());
+            System.out.println(rsButton.toString());
+            rsButton.click();
+        }
+    }
+
 }
